@@ -1,0 +1,30 @@
+.cancelbtn, .deletebtn {
+    float: left;
+    width: 20%;
+  }
+  
+  /* Add a color to the cancel button */
+  .cancelbtn {
+    background-color: #ccc;
+    color: black;
+    margin-left: 120px;
+    margin-right: 16px;
+  }
+  
+  /* Add a color to the delete button */
+  .deletebtn {
+    background-color: #3662f4;
+  }
+
+  .container {
+    padding: 16px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  @media screen and (max-width: 300px) {
+    .cancelbtn, .deletebtn {
+      width: 100%;
+    }
+  }

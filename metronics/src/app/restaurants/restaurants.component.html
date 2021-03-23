@@ -1,0 +1,32 @@
+<div class="topnav">
+    <marquee width="40%" direction="right" height="100px">
+        <h1 style="color:white; font-weight: bolder;"> ZONIONS </h1>
+    </marquee>
+  <b><a href="/auth/login" style="margin-right: 100px;">Back To Login</a></b>
+  <div class="topnav-right">
+   <b><a href="/restaurant/home">Active Restaurants</a></b>
+  </div>
+</div>
+<div>
+    <ngb-carousel>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img src="assets/media/slider/2.jpg" alt="Angular Carousel 1">
+          </div>
+          
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+              <img src="assets/media/slider/1.jpg" alt="Angular Carousel 1">
+          </div>
+        </ng-template>
+        <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img src="assets/media/slider/3.jpg" alt="Angular Carousel 1">
+            </div>
+          </ng-template>
+      </ngb-carousel>      
+</div>
+
+
+<router-outlet></router-outlet>

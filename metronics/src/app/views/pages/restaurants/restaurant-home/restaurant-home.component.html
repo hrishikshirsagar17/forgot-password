@@ -1,0 +1,37 @@
+
+
+      <kt-portlet>
+        <ng-container ktPortletTitle>
+            <h3 class="kt-portlet__head-title" style="text-align: center;">
+                <h2>{{'PAGE.ACTIVE_RESTAURANT_LIST' | translate}}</h2>
+            </h3>
+        </ng-container>
+        <br><br>
+        <div class="search-div">
+
+            <mat-form-field class="search-form-field">
+                <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="on" (keyup)="applyFilter()">
+                <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div class="mat-elevation-z8">
+            <mat-table [dataSource]="listData" matSort>
+                <ng-container matColumnDef="restaurantName">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.RESTAURANT_NAME' | translate}}  </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.restaurantName}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef style="text-align: center;">{{ 'PAGE.ACTIONS' | translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <a [routerLink]="['/restaurants/restaurantDetail',element.restaurantName]">
+                        <button mat-icon-button matTooltip="Restaurant Details"><mat-icon>launch</mat-icon></button></a>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[3,6,9]" [pageSize]="3" showFirstLastButtons></mat-paginator>
+        </div>
+    </kt-portlet>

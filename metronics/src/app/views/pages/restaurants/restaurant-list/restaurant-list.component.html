@@ -1,0 +1,156 @@
+<!-- Restaurant List Form -->
+<kt-portlet>
+    <ng-container ktPortletTitle>
+        <h3 class="kt-portlet__head-title" style="text-align: center;">
+            <h2>Restaurant List</h2>
+        </h3>
+    </ng-container>
+    <br><br>
+    <div class="search-div">
+        <button mat-raised-button  (click)="open(content)">
+            <mat-icon>add</mat-icon>Add
+          </button>
+        <mat-form-field class="search-form-field">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div class="mat-elevation-z8">
+        <mat-table [dataSource]="listData" matSort>
+            <ng-container matColumnDef="restaurantName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Restaurant Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.restaurantName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="address">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="phoneNo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Contact Details </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.phoneNo}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="open_time">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Open Time </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.open_time}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="close_time">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Close Time </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.close_time}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="updatedTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Updated Time </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.updatedTime| slice:0:8}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef style="text-align: center;">Actions</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+
+                    <button mat-icon-button color="primary" matTooltip="Edit Restaurant" (click)="edit(element)">
+                        <mat-icon>create</mat-icon>
+                    </button>&nbsp;
+
+
+                    <button mat-icon-button color="primary" matTooltip="Delete Restaurant"
+                        (click)="deleteRestaurant(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>&nbsp;
+
+                    <button mat-icon-button color="primary" matTooltip="Change Status"
+                        (click)="changeStatus(element.id)">
+                        <mat-icon>autorenew</mat-icon>
+                    </button>&nbsp;
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[3,6,9]" [pageSize]="3" showFirstLastButtons></mat-paginator>
+    </div>
+</kt-portlet>
+
+<!-- Add Restaurant Form -->
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add Restaurant</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+<div class="modal-body">
+    <form class="example-form" [formGroup]="restaurantForm" (ngSubmit)="saveRestaurant(restaurantForm.value)">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Restaurant Name" formControlName="restaurantName">
+            <mat-error *ngIf="restaurantForm.get('restaurantName').hasError('required')">
+                Restaurant Name is Required!
+            </mat-error>
+            <mat-error *ngIf="restaurantForm.get('restaurantName').hasError('minlength')">
+                Restaurant Name should be atleast 2 characters long!
+            </mat-error>
+
+            <mat-error *ngIf="restaurantForm.get('restaurantName').hasError('maxlength')">
+                Restaurant Name can be atmax 25 characters long!
+            </mat-error>
+
+            <mat-error *ngIf="restaurantForm.get('restaurantName').hasError('pattern')">
+                Restaurant Name should not have digits or special characters!
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Address" formControlName="address">
+            <mat-error *ngIf="restaurantForm.get('address').hasError('required')">
+                Address is Required!
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Contact Number" formControlName="phoneNo" autocomplete="off">
+            <mat-error *ngIf="restaurantForm.get('phoneNo').hasError('required')">
+                Phone Number is Required!
+            </mat-error>
+            <mat-error *ngIf="restaurantForm.get('phoneNo').hasError('pattern')">
+                Phone Number Must start with 7/8/9
+            </mat-error>
+            <mat-error *ngIf="restaurantForm.get('phoneNo').hasError('minlength')">
+                Phone Number should be atleast 10 digits long!
+            </mat-error>
+            <mat-error *ngIf="restaurantForm.get('phoneNo').hasError('maxlength')">
+                Phone Number should be have 10 digits only!
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <div class="form-group">
+            <b><label>Open Time<span style="color: red;">*</span></label></b>
+            <ngb-timepicker [formControlName]="'open_time'"></ngb-timepicker>
+        </div>
+
+        <div class="form-group">
+            <b><label>Close Time<span style="color: red;">*</span></label></b>
+            <ngb-timepicker [formControlName]="'close_time'"></ngb-timepicker>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" value="Check" translate="">Save</button>&nbsp;&nbsp;
+        </div>
+    </form>
+    <div class="alert alert-success" *ngIf="isSubmitted===true">
+        <strong>Restaurant Data Saved Successfully !!!</strong>
+      </div>
+    <br>
+    <label style="font-size: large; font-weight: bold;">Upload Menu <span style="color: red;">*</span></label>
+    <form class="example-form" [formGroup]="restaurantForm" (ngSubmit)="uploadFile()">
+        <input type="file" (change)="onFileChangeEvent($event)" multiple="false" name="select file"
+            style="width: 210px;" accept=".png,.jpg,.jpeg,.jfif" />
+        &nbsp;&nbsp;&nbsp;<span style="color: red;">*Image should be less than 1 MB</span>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary" translate="">Upload</button>
+    </form>
+</div>
+</ng-template>

@@ -1,0 +1,36 @@
+<div class="container jumbotron">
+    <h2 style="text-align: center;">Book Table</h2>
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit(bookingForm.value)">
+            <div class="form-group">
+                <b><label>Restaurant Name<span style="color: red;">*</span></label></b>
+                <input type="text" placeholder=""
+                formControlName="restaurantName" name="restaurantName" class="form-control"/>
+            </div>
+            <b><label>Booking Date<span style="color: red;">*</span></label></b><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput formControlName="date" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="form-group">
+                <b><label>Booking Time<span style="color: red;">*</span></label></b>
+                <ngb-timepicker [formControlName]="'bookTime'" ></ngb-timepicker>
+            </div>
+            <b><label>Seats<span style="color: red;">*</span></label></b>
+            <mat-select formControlName="noOfSeats" placeholder="Select Seats" [(value)]="selected">
+                <mat-option>-- Number Of Seats --</mat-option>
+                <mat-option value="1">1</mat-option>
+                <mat-option value="2">2</mat-option>
+                <mat-option value="3">3</mat-option>
+                <mat-option value="3">4</mat-option>
+                <mat-option value="3">5</mat-option>
+            </mat-select>
+            <br>
+            <br>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+</div>

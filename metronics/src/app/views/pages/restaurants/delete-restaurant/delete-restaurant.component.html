@@ -1,0 +1,13 @@
+
+<div class="container">
+  <button type="button" class="close" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+</button>
+<br>
+    <b><p>Are you sure, you want to delete this restaurant?</p></b>
+
+    <div class="clearfix">
+      <button type="button" (click)="cancel()" class="cancelbtn">No</button>
+      <button type="button" (click)="delete()" class="deletebtn">Yes</button>
+    </div>
+  </div>
