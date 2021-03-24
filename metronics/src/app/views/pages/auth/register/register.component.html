@@ -1,103 +1,124 @@
-<!--begin::Body-->
-<div class="kt-login__body">
-	<!--begin::Signin-->
-	<div class="kt-login__form">
-		<div class="kt-login__title">
-			<h3>{{ 'AUTH.REGISTER.TITLE' | translate }}</h3>
-		</div>
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row"> 
+                        <img [src]="getLogo()" class="logo"> 
+                    </div>
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> 
+                        <img [src]="getAddon()" class="image"> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    
+                    <!-- <app-social-login></app-social-login> -->
 
-		<kt-auth-notice></kt-auth-notice>
+                    <div class="row px-3 mb-4">
+                        <div class="line"></div> <small class="or text-center">Or</small>
+                        <div class="line"></div>
+                    </div>
 
-		<form class="kt-login__form kt-form" [formGroup]="registerForm" autocomplete="off">
+                    <span class="text-danger errorMsg" *ngIf="errorMessage">
+                        {{ errorMessage }}
+                    </span>
+                    
+                    <!-- SIGN UP FORM -->
 
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>{{ 'AUTH.INPUT.EMAIL' | translate }}</mat-label>
-					<input matInput type="email" placeholder="{{ 'AUTH.INPUT.EMAIL' | translate }}" formControlName="email" autocomplete="off"/>
-					<mat-error *ngIf="isControlHasError('email','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','email')">
-						<strong>{{ 'AUTH.VALIDATION.INVALID_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 25</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','pattern')">
-						<strong>{{'AUTH.VALIDATION.EMAIL_PATTERN' | translate}}</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>Username</mat-label>
-					<input matInput type="text" placeholder="Username" formControlName="username"/>
-					<mat-error *ngIf="isControlHasError('username','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('username','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('username','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 25</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('username','pattern')">
-						<strong>{{'AUTH.VALIDATION.USERNAME_PATTERN' | translate}}</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
-					<input matInput type="password" placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}" formControlName="password" autocomplete="off"/>
-					<mat-error *ngIf="isControlHasError('password','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 25</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','pattern')">
-						<strong>{{'AUTH.VALIDATION.PASSWORD_PATTERN' | translate}}</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}</mat-label>
-					<input matInput type="password" placeholder="{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}" formControlName="confirmPassword" autocomplete="off"/>
-					<mat-error *ngIf="isControlHasError('confirmPassword','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('confirmPassword','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('confirmPassword','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 25</strong>
-					</mat-error>
-					<mat-error *ngIf="registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').errors.ConfirmPassword">
-						<strong>Passsword and ConfirmPassword didn't match.</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="form-group">
-				<mat-checkbox name="agree" formControlName="agree">
-					I agree the <a href="javascript:;">terms & conditions</a>
-				</mat-checkbox>
-			</div>
+                    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Full Name</h6>
+                            </label>
+                            <input class="form-control" type="text" formControlName="name"
+                                placeholder="Enter full name">
+                            <span class="text-danger"
+                                *ngIf="(signupFormControl.name.touched || submitted) && signupFormControl.name.errors?.required">
+                                Name is required
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="signupFormControl.name.touched && signupFormControl.name.errors?.minlength">
+                                Name must contain minimun 4 characters
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="signupFormControl.name.touched && signupFormControl.name.errors?.maxlength">
+                                Name cannot contain more than 20 characters
+                            </span>
+                        </div>
 
-			<!--begin::Action-->
-			<div class="kt-login__actions">
-				
-				<button routerLink="/auth/login" [disabled]="loading" id="kt_login_signup_cancel" class="btn btn-secondary btn-elevate kt-login__btn-secondary">{{ 'AUTH.GENERAL.BACK_BUTTON' | translate }}</button>
-				<button (click)="submit()" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">{{ 'AUTH.GENERAL.SUBMIT_BUTTON' | translate }}</button>
-			</div>
-			<!--end::Action-->
-		</form>
-	</div>
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Email Address</h6>
+                            </label>
+                            <input class="form-control" type="email" formControlName="email"
+                                placeholder="Enter a valid email address">
+                            <span class="text-danger"
+                                *ngIf="(signupFormControl.email.touched || submitted) && signupFormControl.email.errors?.required">
+                                Email is required
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="signupFormControl.email.touched && signupFormControl.email.errors?.email">
+                                Enter a valid email address
+                            </span>
+                        </div>
+
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Password</h6>
+                            </label>
+                            <input class="form-control" type="password" formControlName="password"
+                                placeholder="Enter password">
+                            <span class="text-danger"
+                                *ngIf="(signupFormControl.password.touched || submitted) && signupFormControl.password.errors?.required">
+                                Password is required
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="signupFormControl.password.touched && signupFormControl.password.errors?.invalidPassword">
+                                Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase
+                                letter and 1 number
+                            </span>
+                        </div>
+
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Confirm Password</h6>
+                            </label>
+                            <input class="form-control" type="password" formControlName="confirmPassword"
+                                placeholder="re-enter password">
+                            <span class="text-danger"
+                                *ngIf="(signupFormControl.confirmPassword.touched || submitted) && signupFormControl.confirmPassword.errors?.required">
+                                Confirm Password is required
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="signupFormControl.confirmPassword.touched && signupFormControl.confirmPassword.errors?.passwordMismatch">
+                                passwords does not match
+                            </span>
+                        </div>
+
+                        <div class="row mb-3 px-3">
+                            <button type="submit" 
+                                    [disabled]="!signupForm.valid"
+                                    class="btn btn-blue text-center">SignUp
+                            </button>
+                        </div>
+                    </form>
+                    <div class="row mb-4 px-3">
+                        <small class="font-weight-bold">
+                            Already have an account?
+                            <a class="text-danger" routerLink="/login">Login</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- <app-popup-modal 
+    [modalObject]="modalObject"
+    [display]="display"
+    (displayChange)="displayChange($event)">
+</app-popup-modal> -->
+
+

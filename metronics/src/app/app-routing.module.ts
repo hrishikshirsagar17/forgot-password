@@ -8,24 +8,20 @@ import {ErrorPageComponent} from './views/theme/content/error-page/error-page.co
 import {AuthGuard} from './core/auth';
 
 const routes: Routes = [
-	   	// {
-		// 	path: 'auth',
-		// 	loadChildren: 'app/views/pages/auth/auth.module#AuthModule'
-		// },
-		{
-			path: 'auth1',
-			loadChildren: 'app/views/pages/auth1/auth1.module#Auth1Module'
+	   	{
+			path: 'auth',
+			loadChildren: 'app/views/pages/auth/auth.module#AuthModule'
 		},
 		{
 			path: 'restaurant',
 			loadChildren: 'app/restaurants/restaurant.module#RestaurantModule',
 		},
 
-	// {
-		// path: '',
-		// component: BaseComponent,
-		// canActivate: [AuthGuard],
-		// children: [
+	{
+		path: '',
+		component: BaseComponent,
+		canActivate: [AuthGuard],
+		children: [
 			{
 				path: 'dashboard',
 				loadChildren: 'app/views/pages/dashboard/dashboard.module#DashboardModule'
@@ -67,9 +63,9 @@ const routes: Routes = [
 					subtitle: 'Internal Server Error'
 				},
 			},
-			{path: '', redirectTo: '/restaurants/home', pathMatch: 'full'},
-		// ],
-	// },
+			{path: '', redirectTo: '/restaurants/home', pathMatch: 'full'}
+		],
+	},
 	{path: '', redirectTo: '/restaurants/home', pathMatch: 'full'},
 	{path: '**', redirectTo: 'error/404', pathMatch: 'full'},
 ];

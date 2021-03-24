@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Constants } from '../constants';
+import { Constants } from '/home/hkshirsagar/Documents/forgot-password/metronics/src/app/core/auth/_services/constants';
 
 @Component({
   selector: 'kt-social-login',

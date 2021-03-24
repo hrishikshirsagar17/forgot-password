@@ -49,7 +49,6 @@ import {
 } from './core/_base/layout';
 // Auth
 import { AuthModule } from './views/pages/auth/auth.module';
-import { Auth1Module} from './views/pages/auth1/auth1.module';
 import { AuthService } from './core/auth';
 // CRUD
 import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
@@ -64,7 +63,6 @@ import * as json from 'highlight.js/lib/languages/json';
 import { LogService } from './views/pages/restaurants/_services/log.service';
 import { RestaurantModule } from './restaurants/restaurant.module';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { AngularBootstrapToastsModule } from 'angular-bootstrap-toasts';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -114,12 +112,10 @@ export function hljsLanguages(): HighlightLanguage[] {
 		StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
 		StoreDevtoolsModule.instrument(),
 		AuthModule.forRoot(),
-		Auth1Module.forRoot(),
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot(),
 		ThemeModule,
-		AngularBootstrapToastsModule
 	],
 	exports: [],
 	providers: [

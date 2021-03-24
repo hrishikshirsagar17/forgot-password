@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Constants } from '../constants';
+import { Constants } from './constants';
 
 export const TOKEN = 'token';
 
@@ -55,7 +55,8 @@ export class OauthLoginService {
     const token = localStorage.getItem(TOKEN);
     if (token === null || token.includes('undefined')) {
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }

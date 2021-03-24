@@ -5,6 +5,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } fr
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TokenStorageService } from '../../../../core/auth/_services/token-storage.service';
+import { OauthLoginService } from '/home/hkshirsagar/Documents/forgot-password/metronics/src/app/core/auth/_services/oauth-login.service';
 
 /**
  * More information there => https://medium.com/@MetonymyQT/angular-http-interceptors-what-are-they-and-how-to-use-them-52e060321088
@@ -12,20 +13,20 @@ import { TokenStorageService } from '../../../../core/auth/_services/token-stora
 @Injectable()
 export class InterceptService implements HttpInterceptor {
 	// intercept request and add token
-	constructor(private tokenStorage: TokenStorageService) {}
-	intercept(
-		request: HttpRequest<any>,
-		next: HttpHandler
-	): Observable<HttpEvent<any>> {
+	constructor(private oauthService: OauthLoginService) { }
 
-		request = request.clone({
-			setHeaders: {
-				Authorization: `Bearer ${this.tokenStorage.getToken()}`
-			}
+	intercept(req: HttpRequest<any>, next: HttpHandler) {
+
+	  const authToken = this.oauthService.getAuthToken();
+	  if (authToken != null) {
+		req = req.clone({
+		  setHeaders: {
+			Authorization: authToken
+		  }
 		});
-		console.log(request);
+	  }
 
-		return next.handle(request).pipe(
+   return next.handle(req).pipe(
 			tap(
 				event => {
 					 if (event instanceof HttpResponse) {

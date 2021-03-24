@@ -4,6 +4,10 @@ export { AuthNoticeService } from './auth-notice/auth-notice.service';
 export { TokenStorageService } from './_services';
 export { AppConstants } from './_services';
 export { OauthService } from './_services';
+export { OauthLoginService } from './_services';
+export { LoaderService } from './_services';
+export { LoaderInterceptorService } from './_services';
+export { CustomValidationService } from './_services';
 // DATA SOURCERS
 export { RolesDataSource } from './_data-sources/roles.datasource';
 export { UsersDataSource } from './_data-sources/users.datasource';

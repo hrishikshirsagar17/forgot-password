@@ -1,93 +1,156 @@
-<!--begin::Head-->
 
-<div class="kt-login__head">
-	<marquee width="60%" direction="left" height="100px">
-		<b><a href="/restaurant/home">Click here to view active restaurants</a></b>
-	</marquee>
-	<span class="kt-login__signup-label">Don't have an account?</span>&nbsp;&nbsp;
-	<a href="javascript:;" routerLink="/auth/register" class="kt-link kt-login__signup-link">{{ 'AUTH.GENERAL.SIGNUP_BUTTON' | translate }}</a>
+<div class="row mb-4 px-3">
+    <h6 class="mb-0 mr-4 mt-2">Sign in with</h6>
+
+    <a [href]="getLoginPage('facebook')">
+        <div class="facebook text-center mr-3">
+            <div class="fa fa-facebook"></div>
+        </div>
+    </a>   
+    
+    <a [href]="getLoginPage('twitter')">
+        <div class="twitter text-center mr-3">
+            <div class="fa fa-twitter"></div>
+        </div>
+    </a>
+    
+    <a [href]="getLoginPage('linkedin')">
+        <div class="linkedin text-center mr-3">
+            <div class="fa fa-linkedin"></div>
+        </div>
+    </a>
+    
+    <a [href]="getLoginPage('google')">
+        <div class="twitter text-center mr-3">
+            <div class="fa fa-google"></div>
+        </div>
+    </a>
+    
+    <a [href]="getLoginPage('github')">
+        <div class="linkedin text-center mr-3">
+            <div class="fa fa-github"></div> 
+        </div>
+    </a>
+    
 </div>
-<!--end::Head-->
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0">
+        <div class="row d-flex">
+            <div class="col-lg-6">
+                <div class="card1 pb-5">
+                    <div class="row"> 
+                        <img [src]="getLogo()" class="logo"> 
+                    </div>
+                    <div class="row px-3 justify-content-center mt-4 mb-5 border-line"> 
+                        <img [src]="getAddon()" class="image"> 
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SOCIAL SIGN IN OPTIONS -->
+            <div class="col-lg-6">
+                <div class="card2 card border-0 px-4 py-5">
+                    
+                    <kt-social-login></kt-social-login>
+                    
+                    <div class="row px-3 mb-4">
+                        <div class="line"></div> <small class="or text-center">Or</small>
+                        <div class="line"></div>
+                    </div>
+                    <span class="text-danger errorMsg" *ngIf="invalidLogin">
+                        {{ errorMessage }}
+                    </span>
+                    <!-- LOGIN FORM -->
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Email Address</h6>
+                            </label>
+                            <input class="form-control" type="email" 
+                                    formControlName="email"
+                                    placeholder="Enter a valid email address">
+                            <span class="text-danger"
+                                *ngIf="(loginFormControl.email.touched || submitted) && loginFormControl.email.errors?.required">
+                                Email is required
+                            </span>
+                            <span class="text-danger"
+                                *ngIf="loginFormControl.email.touched && loginFormControl.email.errors?.email">
+                                Enter a valid email address
+                            </span>
+                        </div>
 
+                        <div class="row px-3">
+                            <label class="mb-1">
+                                <h6 class="mb-0 text-sm">Password</h6>
+                            </label>
+                            <input type="password" 
+                                    formControlName="password"
+                                    class="form-control" 
+                                    placeholder="Enter password"> 
+                            <span class="text-danger"
+                                *ngIf="(loginFormControl.password.touched || submitted) && loginFormControl.password.errors?.required">
+                                Password is required
+                            </span>
+                        </div>
 
-<!--begin::Body-->
-<div class="kt-login__body">
-	<!--begin::Signin-->
-	<div class="kt-login__form">
-		<div class="kt-grid__item" style="text-align: center;">
-			<a href="javascript:;" class="kt-login__logo">
-				<img src="./assets/media/logos/spinner.png" alt="logo">
-			</a>
-		</div> 
+                        <div class="row px-3 mb-4">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input  id="chk1"
+                                        (change)="toggleValue($event)" 
+                                        type="checkbox" 
+                                        name="chk" 
+                                        class="custom-control-input">
+                                <label for="chk1" class="custom-control-label text-sm">Remember me</label>
+                            </div>
+                            <a  class="ml-auto mb-0 text-sm"
+                                href="javascript:void(0)" 
+                                (click)="openForgotPassModal()">Forgot Password?</a>
+                        </div>
 
-		<!-- <kt-auth-notice></kt-auth-notice> -->
-
-		<!--begin::Form-->
-		<form class="kt-form" [formGroup]="loginForm" autocomplete="off">
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>{{ 'AUTH.INPUT.EMAIL' | translate }}</mat-label>
-					<input matInput type="email" placeholder="{{ 'AUTH.INPUT.EMAIL' | translate }}" formControlName="email" autocomplete="off"/>
-					<mat-error *ngIf="isControlHasError('email','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','email')">
-						<strong>{{ 'AUTH.VALIDATION.EMAIL_PATTERN' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 8</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('email','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 50</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
-					<input matInput type="password" placeholder="password" formControlName="password" autocomplete="off"/>
-					<mat-error *ngIf="isControlHasError('password','required')">
-						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','minlength')">
-						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 8</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','maxlength')">
-						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 50</strong>
-					</mat-error>
-					<mat-error *ngIf="isControlHasError('password','pattern')">
-						<strong>{{ 'AUTH.VALIDATION.PASSWORD_PATTERN' | translate}}</strong>
-					</mat-error>
-				</mat-form-field>
-			</div>
-			<!--begin::Action-->
-			<div class="kt-login__actions">
-				&nbsp;
-				<button (click)="submit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
-			</div>
-			<!--end::Action-->
-		</form>
-	
-
-		
-		<div class="kt-login__divider">
-			<div class="kt-divider">
-				<span></span>
-				<span>OR</span>
-				<span></span>
-			</div>
-		</div>
-		
-
-		
-		<div class="kt-login__options">
-			
-			<button (click)="signInWithFB()" class="btn btn-primary kt-btn"><i class="fab fa-facebook-f"></i>Facebook</button>
-			<button (click)="signInWithGoogle()" class="btn btn-danger kt-btn"><i class="fab fa-google"></i>Google</button>
-
-		</div>
-		
-	</div>
-
+                        <div class="row mb-3 px-3">
+                            <button type="submit" 
+                                    [disabled]="!loginForm.valid"
+                                    class="btn btn-blue text-center"> Login
+                            </button>
+                        </div>
+                    </form>
+                    <div class="row mb-4 px-3">
+                        <small class="font-weight-bold">
+                            Don't have an account?
+                            <a class="text-danger" [routerLink]="['/signup']">Register</a>
+                        </small>
+                        <small class="font-weight-bold ml-auto mb-0">
+                            Not received verification mail?
+                            <a  class="text-danger" 
+                                href="javascript:void(0)"
+                                (click)="openVerifyEmailModal()">Verify email</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="bg-blue py-4">
+            <div class="row px-3">
+                <small class="ml-4 ml-sm-5 mb-2">
+                    Copyright &copy; 2019. All rights reserved.
+                </small>
+                <div class="social-contact ml-4 ml-sm-auto">
+                    <span class="fa fa-facebook mr-4 text-sm"></span>
+                    <span class="fa fa-google-plus mr-4 text-sm"></span>
+                    <span class="fa fa-linkedin mr-4 text-sm"></span>
+                    <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span>
+                </div>
+            </div>
+        </div> -->
+    </div>
 </div>
+<kt-verify-link-modal 
+    [display]="display"
+    [modalData]="verifyModalData"
+    (eventDisplay)="eventDisplay($event)">
 
+</kt-verify-link-modal>
+<a [href]="getLoginPage('google')" class="btn btn-danger kt-btn">
+	<i class="fab fa-google"></i>
+	Google
+</a>

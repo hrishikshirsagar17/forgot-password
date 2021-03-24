@@ -1,8 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CustomValidationService } from '../../services/validation/custom-validation.service';
-import { OauthLoginService } from '../../services/oauth-login.service';
+// tslint:disable-next-line: max-line-length
+import { OauthLoginService } from '/home/hkshirsagar/Documents/forgot-password/metronics/src/app/core/auth/_services/oauth-login.service';
+// tslint:disable-next-line: max-line-length
+import { CustomValidationService } from '/home/hkshirsagar/Documents/forgot-password/metronics/src/app/core/auth/_services/custom-validation.service';
+
 
 @Component({
   selector: 'kt-verify-link-modal',

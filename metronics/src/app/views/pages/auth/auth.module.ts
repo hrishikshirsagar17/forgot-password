@@ -21,6 +21,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 // Auth
 import { AuthEffects, AuthGuard, authReducer, AuthService } from '../../../core/auth';
+import { VerifyLinkModalComponent } from './verify-link-modal/verify-link-modal.component';
+import { PopupModalComponent } from './popup-modal/popup-modal.component';
+import { SocialLoginComponent } from './social-login/social-login.component';
 
 const routes: Routes = [
 	{
@@ -78,7 +81,10 @@ const routes: Routes = [
 		LoginComponent,
 		RegisterComponent,
 		ForgotPasswordComponent,
-		AuthNoticeComponent
+		AuthNoticeComponent,
+		VerifyLinkModalComponent,
+		PopupModalComponent,
+		SocialLoginComponent
 	]
 })
 
